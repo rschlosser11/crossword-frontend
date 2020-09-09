@@ -3,6 +3,7 @@ import './App.css';
 import { connect } from 'react-redux';
 import { fetchCrosswords } from './actions/crosswordActions';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import CrosswordListContainer from './components/CrosswordListContainer';
 
 class App extends React.Component {
   componentDidMount () {
@@ -13,6 +14,7 @@ class App extends React.Component {
       <Router>
         <div className="App">
           <Route exact path='/' render={() => <h1>Crossword Puzzles</h1>} />
+          <Route exact path='/crosswords' component={CrosswordListContainer} />
         </div>
       </Router>
     );
