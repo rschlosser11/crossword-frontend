@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { connect } from 'react-redux';
 import { fetchCrosswords } from './actions/crosswordActions';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
