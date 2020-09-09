@@ -1,9 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import CrosswordListItem from './CrosswordListItem'
 
 function CrosswordListContainer({ crosswords }) {
     return (
         <div className='crossword-list-container'>
+            <ul>
+                {crosswords.map(crossword => <CrosswordListItem key={crossword.id}crossword={crossword} />)}
+            </ul>
         </div>
     )
 }
