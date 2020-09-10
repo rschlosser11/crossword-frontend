@@ -1,15 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import CrosswordListItem from './CrosswordListItem'
+import CrosswordListItem from './CrosswordListItem';
+import { Container, Tabs, Tab } from 'react-bootstrap';
 
 function CrosswordListContainer({ crosswords }) {
     return (
-        <div className='crossword-list-container'>
+        <Container>
             <h1>Crossword Puzzles</h1>
-            <ul>
-                {crosswords.map(crossword => <CrosswordListItem key={crossword.id}crossword={crossword} />)}
-            </ul>
-        </div>
+            <Tabs defaultActiveKey='easy'>
+                <Tab eventKey='easy' title="Easy">
+                    {crosswords.map(crossword => <CrosswordListItem key={crossword.id}crossword={crossword} />)}
+                </Tab>
+                <Tab eventKey='medium' title="Medium">
+                    {crosswords.map(crossword => <CrosswordListItem key={crossword.id}crossword={crossword} />)}
+                </Tab>
+                <Tab eventKey='hard' title="Hard">
+                    {crosswords.map(crossword => <CrosswordListItem key={crossword.id}crossword={crossword} />)}
+                </Tab>
+                <Tab eventKey='sunday' title="Sunday">
+                    {crosswords.map(crossword => <CrosswordListItem key={crossword.id}crossword={crossword} />)}
+                </Tab>
+            </Tabs>
+        </Container>
     )
 }
 

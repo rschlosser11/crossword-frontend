@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import manageCrosswords from './reducers/ManageCrosswords';
 import thunk from 'redux-thunk';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const store = createStore(manageCrosswords, applyMiddleware(thunk))
 
