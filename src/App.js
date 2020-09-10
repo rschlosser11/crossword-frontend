@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCrosswords } from './actions/crosswordActions';
+import { fetchAllCrosswords } from './actions/crosswordActions';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CrosswordListContainer from './components/CrosswordListContainer';
 
@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCrosswords: () => dispatch(fetchCrosswords()),
+    fetchCrosswords: () => dispatch(fetchAllCrosswords()),
   }
 }
 
