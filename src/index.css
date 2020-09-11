@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.clue {
+  margin-bottom: 0.2em;
+}
+
+.clues {
+  height: 275px;
+  overflow: hidden auto;
+  margin-top: 20px;
+}
