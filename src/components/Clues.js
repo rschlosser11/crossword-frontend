@@ -1,10 +1,19 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
-export default function Clues ({ crossword }) {
+function Clues ({ chosenCrswd }) {
     return (
         <Container>
-            {crossword.across_clues[0]}
+            {chosenCrswd.across_clues[0]}
         </Container>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        chosenCrswd: state.chosenCrswd
+    }
+}
+
+export default connect(mapStateToProps)(Clues)

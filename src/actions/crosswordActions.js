@@ -3,6 +3,7 @@ const ADD_EASY_CRSWDS = 'ADD_EASY_CRSWDS';
 const ADD_MED_CRSWDS = 'ADD_MED_CRSWDS';
 const ADD_HARD_CRSWDS = 'ADD_HARD_CRSWDS';
 const ADD_SUN_CRSWDS = 'ADD_SUN_CRSWDS';
+const CHOOSE_CRSWD = 'CHOOSE_CRSWD'
 
 export const fetchAllCrosswords = () => {
     return (dispatch) => {
@@ -28,5 +29,15 @@ export const fetchCrswdsByDifficulty = (level) => {
                 return dispatch({type: ADD_SUN_CRSWDS, crosswords: obj})
             }
         }).catch(err => console.log(err))
+    }
+}
+
+export const fetchChosenCrswd = (id) => {
+    console.log('in fetch chosen crossword')
+    return (dispatch) => {
+        fetch(`http://localhost:3000/crosswords/${id}`)
+        .then(res => res.json())
+        .then(obj => dispatch({type: CHOOSE_CRSWD, crossword: obj}))
+        .catch(err => console.log(err))
     }
 }

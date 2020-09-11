@@ -1,9 +1,10 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
-export default class Grid extends React.Component {
+class Grid extends React.Component {
     render () {
-        let crossword = this.props.crossword
+        let crossword = this.props.chosenCrswd
         return(
             <Container>
                 {crossword.cols}
@@ -11,3 +12,11 @@ export default class Grid extends React.Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        chosenCrswd: state.chosenCrswd
+    }
+}
+
+export default connect(mapStateToProps)(Grid)

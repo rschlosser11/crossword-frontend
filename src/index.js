@@ -8,13 +8,24 @@ import { createStore, applyMiddleware } from 'redux';
 import manageCrosswords from './reducers/ManageCrosswords';
 import thunk from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react'
 
-const store = createStore(manageCrosswords, applyMiddleware(thunk))
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+const persistedReducer = persistReducer(persistConfig, manageCrosswords)
+const store = createStore(persistedReducer, applyMiddleware(thunk))
+const persistor = persistStore(store)
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

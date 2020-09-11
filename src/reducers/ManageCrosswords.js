@@ -1,4 +1,4 @@
-export default function manageCrosswords(state = {crosswords: [], easyCrswds: [], medCrswds: [], hardCrswds: [], sunCrswds: []}, action) {
+export default function manageCrosswords(state = {crosswords: [], easyCrswds: [], medCrswds: [], hardCrswds: [], sunCrswds: [], chosenCrswd: null}, action) {
     switch(action.type) {
         case 'ADD_CROSSWORDS':
             return {...state, crosswords: action.crosswords};
@@ -10,6 +10,9 @@ export default function manageCrosswords(state = {crosswords: [], easyCrswds: []
             return {...state, hardCrswds: action.crosswords};
         case 'ADD_SUN_CRSWDS':
             return {...state, sunCrswds: action.crosswords};
+        case 'CHOOSE_CRSWD':
+            console.log('in manage crosswords')
+            return {...state, chosenCrswd: action.crossword}
         default:
             return state;
     }
