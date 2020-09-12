@@ -1,13 +1,19 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import GridBox from './GridBox';
 
 class Grid extends React.Component {
     render () {
         let crossword = this.props.chosenCrswd
+        let style = {
+            width: `${42 * crossword.cols}px`,
+        }
         return(
-            <Container>
-                {crossword.cols}
+            <Container style={style} >
+                {crossword.grid.map((box, i) => {
+                    return <GridBox letter={box} />
+                })}
             </Container>
         )
     }

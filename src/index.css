@@ -21,3 +21,18 @@ code {
   overflow: hidden auto;
   margin-top: 20px;
 }
+
+.box {
+  height: 40px;
+  width: 40px;
+  outline: 1px solid grey;
+  border:none;
+  outline-offset: -1px;
+  display: inline-table;
+  margin: 0;
+  float: left;
+}
+
+.empty {
+  background: black;
+}
