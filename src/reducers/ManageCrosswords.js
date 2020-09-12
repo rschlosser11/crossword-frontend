@@ -11,7 +11,6 @@ export default function manageCrosswords(state = {crosswords: [], easyCrswds: []
         case 'ADD_SUN_CRSWDS':
             return {...state, sunCrswds: action.crosswords};
         case 'CHOOSE_CRSWD':
-            console.log('in manage crosswords')
             return {...state, chosenCrswd: action.crossword}
         default:
             return state;
