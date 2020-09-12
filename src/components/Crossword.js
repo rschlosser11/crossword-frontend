@@ -1,13 +1,31 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Grid from './Grid';
 import Clues from './Clues';
+import { connect } from 'react-redux';
 
-export default function Crossword ({ chosenCrswd }) {
+function Crossword ({ chosenCrswd }) {
     return (
         <Container>
-            <Grid />
-            <Clues />
+            <Container>
+                <h3>{chosenCrswd.title}</h3>
+            </Container>
+            <Row>
+                <Col>
+                    <Grid />
+                </Col>
+                <Col>
+                    <Clues />
+                </Col>
+            </Row>
         </Container>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        chosenCrswd: state.chosenCrswd
+    }
+}
+
+export default connect(mapStateToProps)(Crossword)
