@@ -6,19 +6,21 @@ import { connect } from 'react-redux';
 
 function Crossword ({ chosenCrswd }) {
     return (
-        <Container>
+        chosenCrswd ? 
             <Container>
-                <h3>{chosenCrswd.title}</h3>
+                <Container>
+                    <h3>{chosenCrswd.title}</h3>
+                </Container>
+                <Row>
+                    <Col>
+                        <Grid />
+                    </Col>
+                    <Col>
+                        <Clues />
+                    </Col>
+                </Row>
             </Container>
-            <Row>
-                <Col>
-                    <Grid />
-                </Col>
-                <Col>
-                    <Clues />
-                </Col>
-            </Row>
-        </Container>
+        : ''
     )
 }
 
