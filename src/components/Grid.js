@@ -2,8 +2,13 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import GridBox from './GridBox';
+import { removeCrswd } from '../actions/crosswordActions';
 
 class Grid extends React.Component {
+    componentWillUnmount() {
+        this.props.removeCrswd();
+    }
+
     render () {
         let crossword = this.props.chosenCrswd
         let style = {
@@ -25,4 +30,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(Grid)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        removeCrswd: () => dispatch(removeCrswd())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Grid)
