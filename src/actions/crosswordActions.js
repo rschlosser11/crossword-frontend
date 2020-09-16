@@ -5,6 +5,8 @@ const ADD_HARD_CRSWDS = 'ADD_HARD_CRSWDS';
 const ADD_SUN_CRSWDS = 'ADD_SUN_CRSWDS';
 const CHOOSE_CRSWD = 'CHOOSE_CRSWD';
 const REMOVE_CRSWD = 'REMOVE_CRSWD';
+const SET_ACTIVE_CLUE = 'SET_ACTIVE_CLUE';
+const REMOVE_ACTIVE_CLUE = 'REMOVE_ACTIVE_CLUE';
 
 export const fetchAllCrosswords = () => {
     return (dispatch) => {
@@ -44,4 +46,12 @@ export const fetchChosenCrswd = (id) => {
 
 export const removeCrswd = () => {
     return {type: REMOVE_CRSWD}
+}
+
+export const setActiveClue = (clue) => {
+    return {type: SET_ACTIVE_CLUE, clue: clue}
+}
+
+export const removeActiveClue = () => {
+    return {type: REMOVE_ACTIVE_CLUE}
 }
