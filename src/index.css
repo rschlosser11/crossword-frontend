@@ -56,3 +56,13 @@ code {
 .highlight {
   background: lightgreen;
 }
+
+.active-clue {
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.crswd-info {
+  text-align: center;
+  margin-top: 10px;
+}
