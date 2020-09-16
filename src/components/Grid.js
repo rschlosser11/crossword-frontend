@@ -17,7 +17,7 @@ class Grid extends React.Component {
         return(
             <Container style={style} >
                 {crossword.grid.map((box, i) => {
-                    return <GridBox key={i} letter={box} num={crossword.gridnums[i]} />
+                    return <GridBox key={i} letter={box} i={i} num={crossword.gridnums[i]} />
                 })}
             </Container>
         )
