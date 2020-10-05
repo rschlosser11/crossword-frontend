@@ -7,7 +7,6 @@ class Clues extends React.Component {
     handleClick = (e) => {
         let clue = {text: e.target.innerText, direction: e.target.getAttribute('direction'), num: e.target.getAttribute('cluenum'), ans: this.findAnswer(e.target.innerText, e.target.getAttribute('direction'))}
         this.props.setActiveClue(clue)
-        console.log(this.props.activeClue)
         if (this.props.activeClue) {
             let activeClue = this.props.activeClue;
             if (activeClue.direction === 'across') {
@@ -26,8 +25,21 @@ class Clues extends React.Component {
         let arrBoxes = Array.from(document.querySelectorAll('div.box'))
         let arrSpans = Array.from(document.querySelectorAll('span.box-label'))
         let firstBox = arrSpans.find(span => span.innerText === clue.num).parentElement
-        let boxes = arrBoxes.slice(parseInt(firstBox.id), (parseInt(firstBox.id) + length))
-        this.props.addActiveBoxes(boxes.map(box => box.id));
+        if (clue.direction === 'across') {
+            let boxes = arrBoxes.slice(parseInt(firstBox.id), (parseInt(firstBox.id) + length))
+            this.props.addActiveBoxes(boxes.map(box => box.id));
+        } else {
+            let num = this.props.chosenCrswd.cols;
+            let boxes = [firstBox];
+            while (boxes.length < length) {
+                let firstI = firstBox.id
+                let i = num * boxes.length + parseInt(firstI);
+                let box = arrBoxes[i];
+                boxes.push(box);
+                this.props.addActiveBoxes(boxes.map(box => box.id))
+            }
+        }
+        
     }
 
     findAnswer = (clue, direction) => {
