@@ -1,11 +1,11 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { setActiveClue, removeActiveClue } from '../actions/crosswordActions';
+import { setActiveClue, removeActiveClue, addActiveBoxes, removeActiveBoxes } from '../actions/crosswordActions';
 
 class Clues extends React.Component {
     handleClick = (e) => {
-        let clue = {text: e.target.innerText, direction: e.target.getAttribute('direction'), num: e.target.getAttribute('cluenum'), ans: this.findAnswer(e.target.innerText)}
+        let clue = {text: e.target.innerText, direction: e.target.getAttribute('direction'), num: e.target.getAttribute('cluenum'), ans: this.findAnswer(e.target.innerText, e.target.getAttribute('direction'))}
         this.props.setActiveClue(clue)
         console.log(this.props.activeClue)
         if (this.props.activeClue) {
@@ -16,9 +16,18 @@ class Clues extends React.Component {
             } else {
                 let across = this.props.chosenCrswd.across_clues.find(clue => clue.split('.')[0] === activeClue.num)
                 this.removeHighlight(across, activeClue.text)
-            }
-            
+            } 
         }
+        this.setActiveBoxes(clue);
+    }
+
+    setActiveBoxes = (clue) => {
+        let length = clue.ans.length;
+        let arrBoxes = Array.from(document.querySelectorAll('div.box'))
+        let arrSpans = Array.from(document.querySelectorAll('span.box-label'))
+        let firstBox = arrSpans.find(span => span.innerText === clue.num).parentElement
+        let boxes = arrBoxes.slice(parseInt(firstBox.id), (parseInt(firstBox.id) + length))
+        this.props.addActiveBoxes(boxes.map(box => box.id));
     }
 
     findAnswer = (clue, direction) => {
@@ -55,7 +64,6 @@ class Clues extends React.Component {
     componentDidUpdate() {
         let crossword = this.props.chosenCrswd;
         let activeClue = this.props.activeClue;
-        console.log(activeClue)
         let across = crossword.across_clues.find(clue => {
             return clue.split('.')[0] === activeClue.num
         });
@@ -65,6 +73,7 @@ class Clues extends React.Component {
 
     componentWillUnmount() {
         this.props.removeActiveClue();
+        this.props.removeActiveBoxesI();
     }
 
     render() {
@@ -107,6 +116,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setActiveClue: (clue) => dispatch(setActiveClue(clue)),
         removeActiveClue: () => dispatch(removeActiveClue()),
+        addActiveBoxes: (boxes) => dispatch(addActiveBoxes(boxes)),
+        removeActiveBoxes: () => dispatch(removeActiveBoxes())
     }
 }
 

@@ -7,6 +7,8 @@ const CHOOSE_CRSWD = 'CHOOSE_CRSWD';
 const REMOVE_CRSWD = 'REMOVE_CRSWD';
 const SET_ACTIVE_CLUE = 'SET_ACTIVE_CLUE';
 const REMOVE_ACTIVE_CLUE = 'REMOVE_ACTIVE_CLUE';
+const ADD_ACTIVE_BOXES = 'ADD_ACTIVE_BOXES';
+const REMOVE_ACTIVE_BOXES = 'REMOVE_ACTIVE_BOXES';
 
 export const fetchAllCrosswords = () => {
     return (dispatch) => {
@@ -54,4 +56,12 @@ export const setActiveClue = (clue) => {
 
 export const removeActiveClue = () => {
     return {type: REMOVE_ACTIVE_CLUE}
+}
+
+export const addActiveBoxes = (boxes) => {
+    return {type: ADD_ACTIVE_BOXES, boxes: boxes}
+}
+
+export const removeActiveBoxes = () => {
+    return {type: REMOVE_ACTIVE_BOXES}
 }
