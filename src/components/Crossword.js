@@ -3,8 +3,19 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Grid from './Grid';
 import Clues from './Clues';
 import { connect } from 'react-redux';
+import { addAnsBoxes } from '../actions/crosswordActions';
+import { useEffect } from 'react';
 
-function Crossword ({ chosenCrswd, activeClue }) {
+function Crossword ({ chosenCrswd, activeClue, ansBoxes, addAnsBoxes }) {
+    useEffect(() => {
+        if (!ansBoxes && chosenCrswd) {
+            let id = chosenCrswd.id;
+            console.log('id', id)
+            addAnsBoxes(id);
+        }
+        console.log(ansBoxes)
+    })
+
     return (
         chosenCrswd ? 
             <Container>
@@ -35,8 +46,15 @@ function Crossword ({ chosenCrswd, activeClue }) {
 const mapStateToProps = (state) => {
     return {
         chosenCrswd: state.chosenCrswd,
-        activeClue: state.activeClue
+        activeClue: state.activeClue,
+        ansBoxes: state.ansBoxes,
     }
 }
 
-export default connect(mapStateToProps)(Crossword)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addAnsBoxes: (id) => dispatch(addAnsBoxes(id)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Crossword)
