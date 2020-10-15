@@ -10,6 +10,7 @@ const REMOVE_ACTIVE_CLUE = 'REMOVE_ACTIVE_CLUE';
 const ADD_ACTIVE_BOXES = 'ADD_ACTIVE_BOXES';
 const REMOVE_ACTIVE_BOXES = 'REMOVE_ACTIVE_BOXES';
 const ADD_ANSWER_IS = 'ADD_ANSWER_IS';
+const REMOVE_ANS_BOXES = 'REMOVE_ANS_BOXES';
 
 export const fetchAllCrosswords = () => {
     return (dispatch) => {
@@ -75,4 +76,8 @@ export const addAnsBoxes = (id) => {
         .then(obj => dispatch({type: ADD_ANSWER_IS, ansBoxes: obj}))
         .catch(err => console.log(err))
     }
+}
+
+export const removeAnsBoxes = () => {
+    return {type: REMOVE_ANS_BOXES};
 }

@@ -2,11 +2,12 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import GridBox from './GridBox';
-import { removeCrswd } from '../actions/crosswordActions';
+import { removeCrswd, removeAnsBoxes } from '../actions/crosswordActions';
 
 class Grid extends React.Component {
     componentWillUnmount() {
         this.props.removeCrswd();
+        this.props.removeAnsBoxes();
     }
 
     render () {
@@ -32,7 +33,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        removeCrswd: () => dispatch(removeCrswd())
+        removeCrswd: () => dispatch(removeCrswd()),
+        removeAnsBoxes: () => dispatch(removeAnsBoxes())
     }
 }
 

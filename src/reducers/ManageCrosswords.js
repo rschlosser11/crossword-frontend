@@ -24,6 +24,8 @@ export default function manageCrosswords(state = {crosswords: [], easyCrswds: []
             return {...state, activeBoxes: null};
         case 'ADD_ANSWER_IS':
             return {...state, ansBoxes: action.ansBoxes}
+        case 'REMOVE_ANS_BOXES':
+            return {...state, ansBoxes: null};
         default:
             return state;
     }
