@@ -13,7 +13,6 @@ function Crossword ({ chosenCrswd, activeClue, ansBoxes, addAnsBoxes }) {
             console.log('id', id)
             addAnsBoxes(id);
         }
-        console.log(ansBoxes)
     })
 
     return (

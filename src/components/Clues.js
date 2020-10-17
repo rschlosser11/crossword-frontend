@@ -5,7 +5,7 @@ import { setActiveClue, removeActiveClue, addActiveBoxes, removeActiveBoxes } fr
 
 class Clues extends React.Component {
     handleClick = (e) => {
-        let clue = {text: e.target.innerText, direction: e.target.getAttribute('direction'), num: e.target.getAttribute('cluenum'), ans: this.findAnswer(e.target.innerText, e.target.getAttribute('direction'))}
+        let clue = {text: e.target.innerText, direction: e.target.getAttribute('direction'), num: e.target.getAttribute('cluenum')}
         this.props.setActiveClue(clue)
         if (this.props.activeClue) {
             let activeClue = this.props.activeClue;
@@ -20,36 +20,14 @@ class Clues extends React.Component {
         this.setActiveBoxes(clue);
     }
 
-    setActiveBoxes = (clue) => {
-        let length = clue.ans.length;
-        let arrBoxes = Array.from(document.querySelectorAll('div.box'))
-        let arrSpans = Array.from(document.querySelectorAll('span.box-label'))
-        let firstBox = arrSpans.find(span => span.innerText === clue.num).parentElement
-        if (clue.direction === 'across') {
-            let boxes = arrBoxes.slice(parseInt(firstBox.id), (parseInt(firstBox.id) + length))
-            this.props.addActiveBoxes(boxes.map(box => box.id));
-        } else {
-            let num = this.props.chosenCrswd.cols;
-            let boxes = [firstBox];
-            while (boxes.length < length) {
-                let firstI = firstBox.id
-                let i = num * boxes.length + parseInt(firstI);
-                let box = arrBoxes[i];
-                boxes.push(box);
-                this.props.addActiveBoxes(boxes.map(box => box.id))
-            }
-        }
-        
-    }
 
-    findAnswer = (clue, direction) => {
-        let crossword = this.props.chosenCrswd;
-        if (direction === 'across') {
-            let i = crossword.across_clues.indexOf(clue)
-            return crossword.across_ans[i];
+    setActiveBoxes = (clue) => {
+        let num = parseInt(clue.num);
+        let obj = this.props.ansBoxes;
+        if (obj && clue.direction === 'across') {
+            return this.props.addActiveBoxes(obj[`${num}A`])
         } else {
-            let i = crossword.down_clues.indexOf(clue)
-            return crossword.down_ans[i];
+            return this.props.addActiveBoxes(obj[`${num}D`])
         }
     }
 
@@ -73,6 +51,13 @@ class Clues extends React.Component {
         }
     }
 
+    componentDidMount () {
+        let chosen = this.props.chosenCrswd
+        let clue = {text: chosen.across_clues[0], direction: 'across', num: 1}
+        this.props.setActiveClue(clue);
+        this.setActiveBoxes(clue);
+    }
+
     componentDidUpdate() {
         let crossword = this.props.chosenCrswd;
         let activeClue = this.props.activeClue;
@@ -85,7 +70,7 @@ class Clues extends React.Component {
 
     componentWillUnmount() {
         this.props.removeActiveClue();
-        this.props.removeActiveBoxesI();
+        this.props.removeActiveBoxes();
     }
 
     render() {
@@ -120,7 +105,9 @@ class Clues extends React.Component {
 const mapStateToProps = (state) => {
     return {
         chosenCrswd: state.chosenCrswd,
-        activeClue: state.activeClue
+        activeClue: state.activeClue,
+        ansBoxes: state.ansBoxes,
+        activeBoxes: state.activeBoxes
     }
 }
 
