@@ -13,8 +13,7 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
-          <Route exact path='/' render={() => <h1>Crossword Puzzles</h1>} />
-          <Route exact path='/crosswords' component={CrosswordListContainer} />
+          <Route exact path='/' component={CrosswordListContainer} />
           <Route exact path='/crosswords/:id' component={Crossword} />
         </div>
       </Router>
