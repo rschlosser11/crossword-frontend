@@ -17,7 +17,7 @@ function Crossword ({ chosenCrswd, activeClue, ansBoxes, addAnsBoxes }) {
 
     return (
         chosenCrswd ? 
-            <Container>
+            <Container className='crossword'>
                 <Container>
                     <div className='highlight active-clue'>
                         <h5>{activeClue ? `${activeClue.direction.toUpperCase()} | ${activeClue.text}` : ''}</h5>

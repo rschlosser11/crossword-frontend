@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import CrosswordListItem from './CrosswordListItem';
 import { Container, Tabs, Tab } from 'react-bootstrap';
 import { fetchCrswdsByDifficulty } from '../actions/crosswordActions';
+import logo from '../images/crossword-logo.png';
 
 class CrosswordListContainer extends React.Component {
     componentDidMount() {
@@ -14,8 +15,8 @@ class CrosswordListContainer extends React.Component {
 
     render() {
         return (
-            <Container>
-                <h1>Crossword Puzzles</h1>
+            <Container className='list-container'>
+                <img id='logo' src={logo} alt='crossword puzzles' />
                 <Tabs defaultActiveKey='easy'>
                     <Tab eventKey='easy' title="Easy">
                         {this.props.easyCrswds.map(crossword => <CrosswordListItem key={crossword.id} crossword={crossword} />)}
