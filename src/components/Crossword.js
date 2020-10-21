@@ -8,11 +8,7 @@ import { useEffect } from 'react';
 
 function Crossword ({ chosenCrswd, activeClue, ansBoxes, addAnsBoxes }) {
     useEffect(() => {
-        if (!ansBoxes && chosenCrswd) {
-            let id = chosenCrswd.id;
-            console.log('id', id)
-            addAnsBoxes(id);
-        }
+        
     })
 
     return (

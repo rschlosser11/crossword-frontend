@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchChosenCrswd } from '../actions/crosswordActions';
+import { fetchChosenCrswd, addAnsBoxes } from '../actions/crosswordActions';
 
 class CrosswordListItem extends React.Component {
     handleClick = (e) => {
-        this.props.fetchChosenCrswd(this.props.crossword.id)
+        let id = this.props.crossword.id
+        this.props.fetchChosenCrswd(id)
+        this.props.addAnsBoxes(id)
     }
     
     render() {
@@ -19,7 +21,8 @@ class CrosswordListItem extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchChosenCrswd: (id) => dispatch(fetchChosenCrswd(id))
+        fetchChosenCrswd: (id) => dispatch(fetchChosenCrswd(id)), 
+        addAnsBoxes: (id) => dispatch(addAnsBoxes(id))
     }
 }
 
