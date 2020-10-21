@@ -1,25 +1,14 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { setActiveClue, removeActiveClue, addActiveBoxes, removeActiveBoxes } from '../actions/crosswordActions';
+import { setActiveClue, addActiveBoxes } from '../actions/crosswordActions';
 
 class Clues extends React.Component {
     handleClick = (e) => {
         let clue = {text: e.target.innerText, direction: e.target.getAttribute('direction'), num: e.target.getAttribute('cluenum')}
         this.props.setActiveClue(clue)
-        if (this.props.activeClue) {
-            let activeClue = this.props.activeClue;
-            if (activeClue.direction === 'across') {
-                let down = this.props.chosenCrswd.down_clues.find(clue => clue.split('.')[0] === activeClue.num)
-                this.removeHighlight(activeClue.text, down)
-            } else {
-                let across = this.props.chosenCrswd.across_clues.find(clue => clue.split('.')[0] === activeClue.num)
-                this.removeHighlight(across, activeClue.text)
-            } 
-        }
         this.setActiveBoxes(clue);
     }
-
 
     setActiveBoxes = (clue) => {
         let num = parseInt(clue.num);
@@ -31,38 +20,9 @@ class Clues extends React.Component {
         }
     }
 
-    removeHighlight = (clueAcross, clueDown) => {
-        let arr = Array.from(document.querySelectorAll('p.clue'));
-        if (!!arr.find(p => p.innerText === clueAcross)) {
-            arr.find(p => p.innerText === clueAcross).classList.remove('highlight');
-        }
-        if (!!arr.find(p => p.innerText === clueDown)) {
-            arr.find(p => p.innerText === clueDown).classList.remove('highlight');
-        }
-    }
-
-    addHighlight = (clueAcross, clueDown) => {
-        let arr = Array.from(document.querySelectorAll('p.clue'));
-        if (!!arr.find(p => p.innerText === clueAcross)) {
-            arr.find(p => p.innerText === clueAcross).classList.add('highlight');
-        }
-        if (!!arr.find(p => p.innerText === clueDown)) {
-            arr.find(p => p.innerText === clueDown).classList.add('highlight');
-        }
-    }
-
-    componentDidUpdate() {
-        let crossword = this.props.chosenCrswd;
-        let activeClue = this.props.activeClue;
-        let across = crossword.across_clues.find(clue => {
-            return clue.split('.')[0] === activeClue.num
-        });
-        let down = crossword.down_clues.find(clue => clue.split('.')[0] === activeClue.num);
-        this.addHighlight(across, down)
-    }
-
     render() {
         let chosenCrswd = this.props.chosenCrswd;
+        let activeText = this.props.activeClue.text;
         return (
             <Container>
                 <Container className='clues'>
@@ -70,7 +30,7 @@ class Clues extends React.Component {
                     <hr />
                     {chosenCrswd.across_clues.map((clue, idx) => {
                         return (
-                            <p key={idx} cluenum={clue.split('.')[0]} direction='across' onClick={this.handleClick} className='clue'>{clue}</p>
+                            <p key={idx} cluenum={clue.split('.')[0]} direction='across' onClick={this.handleClick} className={`clue ${clue === activeText ? 'highlight' : ''}`}>{clue}</p>
                             )
                         })
                     }
@@ -80,7 +40,7 @@ class Clues extends React.Component {
                     <hr />
                     {chosenCrswd.down_clues.map((clue, idx) => {
                         return (
-                            <p key={idx} cluenum={clue.split('.')[0]} direction='down' onClick={this.handleClick} className='clue'>{clue}</p>
+                            <p key={idx} cluenum={clue.split('.')[0]} direction='down' onClick={this.handleClick} className={`clue ${clue === activeText ? 'highlight' : ''}`}>{clue}</p>
                             )
                         })
                     }
@@ -102,9 +62,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setActiveClue: (clue) => dispatch(setActiveClue(clue)),
-        removeActiveClue: () => dispatch(removeActiveClue()),
         addActiveBoxes: (boxes) => dispatch(addActiveBoxes(boxes)),
-        removeActiveBoxes: () => dispatch(removeActiveBoxes())
     }
 }
 
