@@ -24,8 +24,7 @@ class GridBox extends React.Component {
 
     handleFocus = (i, prev) => {
         let grid = Array.from(document.querySelectorAll('div.box'));
-        !grid[i].classList.contains('empty') ? grid[i].lastChild.focus() : prev.focus();
-        
+        !grid[i].classList.contains('empty') ? grid[i].lastChild.focus() : prev.focus(); 
     }
     
     render() {
@@ -43,7 +42,7 @@ class GridBox extends React.Component {
                 {num === 0 ? '' : <span className='box-label'>{num}</span>}
                 {letter === '.' ? '' : 
                 <input 
-                    className={`box-input ${activeBoxes.includes(i) ? 'highlight' : ''}`}
+                    className={`box-input ${activeBoxes && activeBoxes.includes(i) ? 'highlight' : ''}`}
                     type='text'
                     maxLength='1'
                     onChange={this.handleKeyDown}

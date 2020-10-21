@@ -51,13 +51,6 @@ class Clues extends React.Component {
         }
     }
 
-    componentDidMount () {
-        let chosen = this.props.chosenCrswd
-        let clue = {text: chosen.across_clues[0], direction: 'across', num: 1}
-        this.props.setActiveClue(clue);
-        this.setActiveBoxes(clue);
-    }
-
     componentDidUpdate() {
         let crossword = this.props.chosenCrswd;
         let activeClue = this.props.activeClue;
@@ -66,11 +59,6 @@ class Clues extends React.Component {
         });
         let down = crossword.down_clues.find(clue => clue.split('.')[0] === activeClue.num);
         this.addHighlight(across, down)
-    }
-
-    componentWillUnmount() {
-        this.props.removeActiveClue();
-        this.props.removeActiveBoxes();
     }
 
     render() {
