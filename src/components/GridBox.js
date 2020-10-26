@@ -6,25 +6,28 @@ class GridBox extends React.Component {
         input: '',
     }
 
-    handleKeyDown = (e) => {
+    handleChange = (e) => {
         let input = e.target.value
         if (!!input.match(/\b[a-zA-Z]{1}\b/)) {
             let i = parseInt(e.target.parentNode.id);
             let cols = parseInt(this.props.chosenCrswd.cols);
-            console.log(cols)
+            this.setState(() => ({input: input}));
             if (this.props.activeClue.direction === 'down') {
-                this.setState(() => ({input: input}));
                 this.handleFocus(i + cols, e.target);
             } else {
-                this.setState({input: input})
                 this.handleFocus(i + 1, e.target);
             }
         }
     }
 
-    handleFocus = (i, prev) => {
+    handleFocus = (nextI, currentEl) => {
         let grid = Array.from(document.querySelectorAll('div.box'));
-        !grid[i].classList.contains('empty') ? grid[i].lastChild.focus() : prev.focus(); 
+        let activeBoxes = this.props.activeBoxes;
+        !!activeBoxes.includes(nextI) ? grid[nextI].lastChild.focus() : currentEl.focus(); 
+    }
+
+    isActiveBox = (i) => {
+        return !!this.props.activeBoxes.find(x => x === i) ? true : false;
     }
     
     render() {
@@ -45,8 +48,9 @@ class GridBox extends React.Component {
                     className={`box-input ${activeBoxes && activeBoxes.includes(i) ? 'highlight' : ''}`}
                     type='text'
                     maxLength='1'
-                    onChange={this.handleKeyDown}
-                    value={this.state.input}>
+                    onChange={this.handleChange}
+                    value={this.state.input}
+                    >
                 </input>}
             </div>
         )

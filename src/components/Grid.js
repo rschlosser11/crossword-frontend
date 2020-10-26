@@ -10,6 +10,11 @@ class Grid extends React.Component {
         this.props.removeAnsBoxes();
     }
 
+    componentDidMount() {
+        let grid = Array.from(document.querySelectorAll('div.box'));
+        grid[0].lastChild.focus();
+    }
+
     render () {
         let crossword = this.props.chosenCrswd
         let style = {

@@ -13,16 +13,27 @@ class Clues extends React.Component {
     setActiveBoxes = (clue) => {
         let num = parseInt(clue.num);
         let obj = this.props.ansBoxes;
+        let boxes 
         if (obj && clue.direction === 'across') {
-            return this.props.addActiveBoxes(obj[`${num}A`])
+            boxes = obj[`${num}A`]
+            this.props.addActiveBoxes(obj[`${num}A`])
         } else {
-            return this.props.addActiveBoxes(obj[`${num}D`])
+            boxes = obj[`${num}D`]
+            this.props.addActiveBoxes(obj[`${num}D`])
         }
+        this.setInitialFocus(boxes);
+        return boxes
+    }
+
+    setInitialFocus = (arr) => {
+        let grid = Array.from(document.querySelectorAll('div.box'));
+        grid[arr[0]].lastChild.focus();
     }
 
     render() {
         let chosenCrswd = this.props.chosenCrswd;
-        let activeText = this.props.activeClue.text;
+        let activeText
+        this.props.activeClue ? activeText = this.props.activeClue.text : activeText = '';
         return (
             <Container>
                 <Container className='clues'>

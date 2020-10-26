@@ -10,9 +10,15 @@ class Crossword extends React.Component {
         if (!this.props.activeClue && this.props.chosenCrswd) {
             let clue = {text: this.props.chosenCrswd.across_clues[0], direction: 'across', num: 1}
             this.props.setActiveClue(clue);
+            let grid = Array.from(document.querySelectorAll('div.box'));
+            console.log(grid[0])
+            grid[0].lastChild.focus();
         } 
         if (!this.props.activeBoxes && this.props.ansBoxes) {
             this.props.addActiveBoxes(this.props.ansBoxes['1A']);
+            let grid = Array.from(document.querySelectorAll('div.box'));
+            grid[0].lastChild.focus();
+
         }
     }
 
