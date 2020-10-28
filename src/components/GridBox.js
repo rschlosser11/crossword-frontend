@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { setActiveClue, addActiveBoxes } from '../actions/crosswordActions';
 
 class GridBox extends React.Component {
     state = {
@@ -8,15 +9,13 @@ class GridBox extends React.Component {
 
     handleChange = (e) => {
         let input = e.target.value
-        if (!!input.match(/\b[a-zA-Z]{1}\b/)) {
-            let i = parseInt(e.target.parentNode.id);
-            let cols = parseInt(this.props.chosenCrswd.cols);
-            this.setState(() => ({input: input}));
-            if (this.props.activeClue.direction === 'down') {
-                this.handleFocus(i + cols, e.target);
-            } else {
-                this.handleFocus(i + 1, e.target);
-            }
+        let i = parseInt(e.target.parentNode.id);
+        let cols = parseInt(this.props.chosenCrswd.cols);
+        this.setState(() => ({input: input}));
+        if (this.props.activeClue.direction === 'down') {
+            this.handleFocus(i + cols, e.target);
+        } else {
+            this.handleFocus(i + 1, e.target);
         }
     }
 
@@ -50,6 +49,7 @@ class GridBox extends React.Component {
                     maxLength='1'
                     onChange={this.handleChange}
                     value={this.state.input}
+                    onKeyDown={this.handleKeyDown}
                     >
                 </input>}
             </div>
@@ -65,4 +65,11 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(GridBox);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setActiveClue: (clue) => dispatch(setActiveClue(clue)),
+        addActiveBoxes: (boxes) => dispatch(addActiveBoxes(boxes)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GridBox);

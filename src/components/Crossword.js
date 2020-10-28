@@ -4,6 +4,7 @@ import Grid from './Grid';
 import Clues from './Clues';
 import { connect } from 'react-redux';
 import { setActiveClue, addActiveBoxes, removeActiveClue, removeActiveBoxes } from '../actions/crosswordActions';
+import CrosswordMenu from './CrosswordMenu';
 
 class Crossword extends React.Component {
     componentDidUpdate() {
@@ -31,6 +32,9 @@ class Crossword extends React.Component {
         return (
             this.props.chosenCrswd ? 
                 <Container className='crossword'>
+                    <Container>
+                        <CrosswordMenu />
+                    </Container>
                     <Container>
                         <div className='highlight active-clue'>
                             <h5>{this.props.activeClue ? `${this.props.activeClue.direction.toUpperCase()} | ${this.props.activeClue.text}` : ''}</h5>
