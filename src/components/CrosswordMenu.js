@@ -6,7 +6,7 @@ import logo from '../images/crossword-logo.png'
 function CrosswordMenu () {
     return (
         <Navbar bg='light' expand='lg'>
-            <Navbar.Brand><img style={{width: '250px'}} src={logo} /></Navbar.Brand>
+            <Navbar.Brand><Link to='/'><img style={{width: '250px'}} src={logo} alt='Crossword Puzzles' /></Link></Navbar.Brand>
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
                 <Nav className='justify-content-end' style={{width: '100%'}}>
