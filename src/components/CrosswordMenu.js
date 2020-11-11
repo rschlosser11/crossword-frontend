@@ -11,11 +11,11 @@ class CrosswordMenu extends React.Component {
         
         answers.forEach((ans, i) => {
             let guess = guesses[i].lastChild;
-            if (ans[i] !== guess.innerText) {
+            if (ans[i] !== '.' && ans[i] !== guess.innerText) {
                 guess.classList.add('wrong');
             }
         })
-    }
+    };
 
     render() {
         return (
