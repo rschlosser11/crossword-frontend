@@ -90,3 +90,7 @@ a {
   text-align: center;
   margin-top: 10px;
 }
+
+.wrong {
+  color: red;
+}

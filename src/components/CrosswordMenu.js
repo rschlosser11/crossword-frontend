@@ -5,6 +5,18 @@ import logo from '../images/crossword-logo.png';
 import { connect } from 'react-redux';
 
 class CrosswordMenu extends React.Component {
+    checkGrid = () => {
+        let guesses = Array.from(document.querySelectorAll('div.box'));
+        let answers = this.props.chosenCrswd.grid;
+        
+        answers.forEach((ans, i) => {
+            let guess = guesses[i].lastChild;
+            if (ans[i] !== guess.innerText) {
+                guess.classList.add('wrong');
+            }
+        })
+    }
+
     render() {
         return (
             <Navbar bg='light' expand='lg'>
@@ -15,7 +27,7 @@ class CrosswordMenu extends React.Component {
                         <NavDropdown title='Check' id='basic-nav-dropdown'>
                             <NavDropdown.Item>Check Letter</NavDropdown.Item>
                             <NavDropdown.Item>Check Clue</NavDropdown.Item>
-                            <NavDropdown.Item>Check Entire Grid</NavDropdown.Item>
+                            <NavDropdown.Item onClick={this.checkGrid}>Check Entire Grid</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title='Reveal' id='basic-nav-dropdown'>
                             <NavDropdown.Item>Reveal Letter</NavDropdown.Item>
