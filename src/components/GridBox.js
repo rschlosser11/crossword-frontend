@@ -19,6 +19,41 @@ class GridBox extends React.Component {
         }
     }
 
+    handleKeyDown = (e) => {
+        e.preventDefault();
+        let currentClue = this.props.activeClue;
+        let nextClue;
+        let dir = currentClue.direction;
+        let clues = this.props.chosenCrswd[`${dir}_clues`];
+        let currentI;
+        if (e.key === 'Tab') {
+            currentI = clues.findIndex(clue => clue === currentClue.text)
+            nextClue = {text: clues[currentI + 1], direction: dir, num: clues[currentI + 1].split('.')[0]}
+            this.props.setActiveClue(nextClue);
+            this.setActiveBoxes(nextClue);
+        }
+    }
+
+    setActiveBoxes = (clue) => {
+        let num = parseInt(clue.num);
+        let obj = this.props.ansBoxes;
+        let boxes 
+        if (obj && clue.direction === 'across') {
+            boxes = obj[`${num}A`]
+            this.props.addActiveBoxes(obj[`${num}A`])
+        } else {    
+            boxes = obj[`${num}D`]
+            this.props.addActiveBoxes(obj[`${num}D`])
+        }
+        this.setInitialFocus(boxes);
+        return boxes
+    }
+
+    setInitialFocus = (arr) => {
+        let grid = Array.from(document.querySelectorAll('div.box'));
+        grid[arr[0]].lastChild.focus();
+    }
+
     handleFocus = (nextI, currentEl) => {
         let grid = Array.from(document.querySelectorAll('div.box'));
         let activeBoxes = this.props.activeBoxes;
@@ -61,7 +96,8 @@ const mapStateToProps = (state) => {
     return {
         chosenCrswd: state.chosenCrswd,
         activeClue: state.activeClue,
-        activeBoxes: state.activeBoxes
+        activeBoxes: state.activeBoxes,
+        ansBoxes: state.ansBoxes,
     }
 }
 
