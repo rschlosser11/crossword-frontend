@@ -7,6 +7,28 @@ class GridBox extends React.Component {
         input: '',
     }
 
+    handleClick = (e) => {
+        let num = parseInt(e.target.parentElement.id);
+        if (!this.props.activeBoxes.includes(num)) {
+            let ansBoxes = this.props.ansBoxes;
+            let currentClue = this.props.activeClue;
+            let dir = currentClue.direction;
+            let letter
+            dir === 'across' ? letter = "A" : letter = "D";
+            let clues = this.props.chosenCrswd[`${dir}_clues`];
+            for (let key in ansBoxes) {
+                if (key.includes(letter) && ansBoxes[key].includes(num)) {
+                    let boxes = ansBoxes[key];
+                    let num = key.split(/[AD]/)[0];
+                    let text = clues.find(clue => clue.includes(num));
+                    let newClue = {text: text, direction: dir, num: num}
+                    this.props.setActiveClue(newClue);
+                    this.props.addActiveBoxes(boxes);
+                }
+            }
+        }
+    }
+
     handleChange = (e) => {
         let input = e.target.value
         let i = parseInt(e.target.parentNode.id);
@@ -75,6 +97,7 @@ class GridBox extends React.Component {
                 className={
                     `${letter === '.' ? 'box empty' : 'box'}`
                 }
+                onClick={this.handleClick}
             >
                 {num === 0 ? '' : <span className='box-label'>{num}</span>}
                 {letter === '.' ? '' : 
