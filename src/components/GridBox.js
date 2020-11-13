@@ -42,6 +42,7 @@ class GridBox extends React.Component {
     }
 
     handleKeyDown = (e) => {
+        console.log(e.key)
         e.preventDefault();
         let currentClue = this.props.activeClue;
         let nextClue;
@@ -53,6 +54,26 @@ class GridBox extends React.Component {
             nextClue = {text: clues[currentI + 1], direction: dir, num: clues[currentI + 1].split('.')[0]}
             this.props.setActiveClue(nextClue);
             this.setActiveBoxes(nextClue);
+        }
+        if (e.key === ' ') {
+            let i = parseInt(e.target.parentElement.id);
+            let ansBoxes = this.props.ansBoxes;
+            let currentClue = this.props.activeClue;
+            let dir
+            currentClue.direction === 'across' ? dir = 'down' : dir = 'across';
+            let letter
+            dir === 'across' ? letter = "A" : letter = "D";
+            let clues = this.props.chosenCrswd[`${dir}_clues`];
+            for (let key in ansBoxes) {
+                if (key.includes(letter) && ansBoxes[key].includes(i)) {
+                    let boxes = ansBoxes[key];
+                    let num = key.split(/[AD]/)[0];
+                    let text = clues.find(clue => clue.includes(num));
+                    let newClue = {text: text, direction: dir, num: num}
+                    this.props.setActiveClue(newClue);
+                    this.props.addActiveBoxes(boxes);
+                }
+            }
         }
     }
 
