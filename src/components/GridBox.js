@@ -29,20 +29,18 @@ class GridBox extends React.Component {
         }
     }
 
-    handleChange = (e) => {
-        let input = e.target.value
-        let i = parseInt(e.target.parentNode.id);
+    handleChange = (target, input) => {
+        let i = parseInt(target.parentNode.id);
         let cols = parseInt(this.props.chosenCrswd.cols);
         this.setState(() => ({input: input}));
         if (this.props.activeClue.direction === 'down') {
-            this.handleFocus(i + cols, e.target);
+            this.handleFocus(i + cols, target);
         } else {
-            this.handleFocus(i + 1, e.target);
+            this.handleFocus(i + 1, target);
         }
     }
 
     handleKeyDown = (e) => {
-        console.log(e.key)
         e.preventDefault();
         let currentClue = this.props.activeClue;
         let nextClue;
@@ -54,8 +52,7 @@ class GridBox extends React.Component {
             nextClue = {text: clues[currentI + 1], direction: dir, num: clues[currentI + 1].split('.')[0]}
             this.props.setActiveClue(nextClue);
             this.setActiveBoxes(nextClue);
-        }
-        if (e.key === ' ') {
+        } else if (e.key === ' ') {
             let i = parseInt(e.target.parentElement.id);
             let ansBoxes = this.props.ansBoxes;
             let currentClue = this.props.activeClue;
@@ -74,8 +71,10 @@ class GridBox extends React.Component {
                     this.props.addActiveBoxes(boxes);
                 }
             }
+        } else if (!!e.key.match(/[a-zA-Z]/)) {
+            this.handleChange(e.target, e.key);
         }
-    }
+    }   
 
     setActiveBoxes = (clue) => {
         let num = parseInt(clue.num);
@@ -126,8 +125,8 @@ class GridBox extends React.Component {
                     className={`box-input ${activeBoxes && activeBoxes.includes(i) ? 'highlight' : ''}`}
                     type='text'
                     maxLength='1'
-                    onChange={this.handleChange}
                     value={this.state.input}
+                    onChange={this.handleChange}
                     onKeyDown={this.handleKeyDown}
                     >
                 </input>}
