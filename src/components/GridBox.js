@@ -29,18 +29,21 @@ class GridBox extends React.Component {
         }
     }
 
-    handleChange = (target, input) => {
-        let i = parseInt(target.parentNode.id);
-        let cols = parseInt(this.props.chosenCrswd.cols);
-        this.setState(() => ({input: input}));
-        if (this.props.activeClue.direction === 'down') {
-            this.handleFocus(i + cols, target);
-        } else {
-            this.handleFocus(i + 1, target);
+    handleChange = (e) => {
+        let input = e.target.value;
+        if (input !== ' ') {
+            let i = parseInt(e.target.parentNode.id);
+            let cols = parseInt(this.props.chosenCrswd.cols);
+            this.setState(() => ({input: input}));
+            if (this.props.activeClue.direction === 'down') {
+                this.handleFocus(i + cols, e.target);
+            } else {
+                this.handleFocus(i + 1, e.target);
+            }
         }
     }
 
-    handleKeyDown = (e) => {
+    handleKeyUp = (e) => {
         e.preventDefault();
         let currentClue = this.props.activeClue;
         let nextClue;
@@ -71,10 +74,8 @@ class GridBox extends React.Component {
                     this.props.addActiveBoxes(boxes);
                 }
             }
-        } else if (!!e.key.match(/[a-zA-Z]/)) {
-            this.handleChange(e.target, e.key);
         }
-    }   
+    }
 
     setActiveBoxes = (clue) => {
         let num = parseInt(clue.num);
@@ -127,7 +128,7 @@ class GridBox extends React.Component {
                     maxLength='1'
                     value={this.state.input}
                     onChange={this.handleChange}
-                    onKeyDown={this.handleKeyDown}
+                    onKeyUp={this.handleKeyUp}
                     >
                 </input>}
             </div>
